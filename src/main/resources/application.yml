@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: thereadingroom
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:postgresql://localhost:5432/the_reading_room
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driverClassName: org.postgresql.Driver
+  config:
+    import: application-env.yml
