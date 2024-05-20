@@ -1,3 +1,5 @@
+server:
+  port: 8081
 spring:
   application:
     name: thereadingroom
@@ -13,3 +15,8 @@ spring:
     driverClassName: org.postgresql.Driver
   config:
     import: application-env.yml
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
