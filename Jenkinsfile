@@ -1,30 +1,39 @@
 pipeline {
-    agent {
-        docker {
-            image 'gradle:8.7-jdk21-alpine' // Use an appropriate Gradle Docker image
-        }
-    }
+    agent any
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh './gradlew --version' // Print Gradle version
+                checkout scm
             }
         }
+
+        stage('Set up JDK 21') {
+            steps {
+                script {
+                    env.JAVA_HOME = tool name: 'JDK 21', type: 'jdk'
+                    env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+                }
+            }
+        }
+
         stage('Test') {
             steps {
-                sh './gradlew test' // Run tests
+                sh './gradlew test'
             }
         }
-        stage('Build Jar') {
+        
+        stage('Build') {
             steps {
-                sh './gradlew build' // Build the project
+                sh './gradlew build'
             }
         }
     }
+
     post {
         always {
-            junit '**/build/test-results/test/*.xml' // Archive test results
-            archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: true // Archive JAR files
+            archiveArtifacts artifacts: 'build/libs/**/*.jar', allowEmptyArchive: true
+            junit 'build/test-results/test/*.xml'
         }
     }
 }
