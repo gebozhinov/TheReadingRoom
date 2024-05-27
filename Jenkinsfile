@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('Set up docker') {
+        stage('Set up Docker') {
             agent {
                 docker {
                     reuseNode true
@@ -25,11 +25,21 @@ pipeline {
                     args  '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
                 }
             }
+            steps {
+                sh 'docker --version'
+            }
         }
+
         stage('Test') {
             steps {
                 sh './gradlew build'
             }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: true
+            junit 'build/reports/tests/test/*.xml'
         }
     }
 }
