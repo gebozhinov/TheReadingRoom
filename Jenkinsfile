@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename 'Dockerfile.jenkinsAgent'
-            additionalBuildArgs 
-            args '-v /var/run/docker.sock:/var/run/docker.sock ... --network="host" -u jenkins:docker'
-       }
-    }
+    agent any
     tools {
         jdk 'JDK 21'
     }
@@ -22,6 +16,14 @@ pipeline {
                 sh 'java -version'
             }
         }
+
+        stage('Set up docker') {
+            agent {
+                docker {
+                    reuseNode true
+                    image 'openjdk:21.0-jdk-slim'
+                    args  '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
+                }
         
         stage('Test') {
             steps {
