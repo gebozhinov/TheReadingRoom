@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thereadingroom.integration.IntegrationTestInit;
 import com.thereadingroom.model.db.BookEntity;
 import com.thereadingroom.repository.BookRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-
 public class BookControllerIntegrationTest extends IntegrationTestInit {
 
 
@@ -77,7 +74,7 @@ public class BookControllerIntegrationTest extends IntegrationTestInit {
                         .content(objectMapper.writeValueAsString(expected)))
                 .andExpect(status().isCreated());
 
-        BookEntity actual = bookRepository.findById(1L).get();
+        BookEntity actual = bookRepository.findById(4L).get();
 
         assertThat(actual.getAuthor()).isEqualTo(expected.getAuthor());
         assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
