@@ -16,10 +16,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            archiveArtifacts artifacts: '**/build/libs/*.jar', allowEmptyArchive: true
-            junit 'build/reports/tests/test/*.xml'
-        }
-    }
 }
