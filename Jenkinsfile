@@ -17,19 +17,6 @@ pipeline {
             }
         }
 
-        stage('Set up Docker') {
-            agent {
-                docker {
-                    reuseNode true
-                    image 'openjdk:21.0-jdk-slim'
-                    args  '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
-                }
-            }
-            steps {
-                sh 'docker --version'
-            }
-        }
-
         stage('Test') {
             steps {
                 sh './gradlew build'
