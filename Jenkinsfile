@@ -9,10 +9,17 @@ pipeline {
                 checkout scm
             }
         }
+        
         stage('Set up Environment') {
             steps {
                 sh 'echo $JAVA_HOME'
                 sh 'java -version'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh './gradlew test'
             }
         }
     }
