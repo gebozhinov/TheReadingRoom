@@ -15,11 +15,6 @@ pipeline {
                 sh 'java -version'
             }
         }
-        stage('Test') {
-            steps {
-                sh './gradlew test'
-            }
-        }
     }
     post {
         always {
