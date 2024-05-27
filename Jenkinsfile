@@ -24,7 +24,8 @@ pipeline {
                     image 'openjdk:21.0-jdk-slim'
                     args  '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
                 }
-        
+            }
+        }
         stage('Test') {
             steps {
                 sh './gradlew build'
