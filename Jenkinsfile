@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_HOST = 'tcp://dind:2375'
-    }
-
     stages {
         stage('Build') {
             steps {
@@ -16,12 +12,9 @@ pipeline {
                 sh './gradlew test'
             }
         }
-        stage('Docker Build') {
+        stage('Docker Check') {
             steps {
-                script {
-                    sh 'docker version'
-                    sh 'docker build -t myapp:latest .'
-                }
+                sh 'docker version'
             }
         }
     }
