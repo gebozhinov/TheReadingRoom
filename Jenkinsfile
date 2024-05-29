@@ -10,11 +10,9 @@ pipeline {
                         args  '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
                     }
                 }
-        }
-        stage('Build') {
-            steps {
-                sh './gradlew build'
-            }
+                steps {
+                         sh './gradlew build'
+                       }
         }
         stage('Test') {
             steps {
