@@ -1,28 +1,18 @@
 pipeline {
-    agent any
+   agent {
+       docker {
+             image 'eclipse-temurin:21.0.3_9-jdk-jammy'
+             args '--network host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+       }
+ }
 
-    stages {
-        stage('Docker setup') {
-                agent {
-                    docker {
-                        reuseNode true
-                        image 'openjdk:21.0-jdk-slim'
-                        args  '-v /var/run/docker.sock:/var/run/docker.sock --group-add 992'
-                    }
-                }
-                steps {
-                         sh './gradlew build'
-                       }
-        }
-        stage('Test') {
-            steps {
-                sh './gradlew test'
-            }
-        }
-        stage('Docker Check') {
-            steps {
-                sh 'docker version'
-            }
-        }
-    }
+   triggers { pollSCM 'H/2 * * * *' } // poll every 2 mins
+
+   stages {
+       stage('Build and Test') {
+           steps {
+               sh './gradlew build'
+           }
+       }
+   }
 }
