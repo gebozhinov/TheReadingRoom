@@ -37,7 +37,7 @@ jobs:
         uses: atomicjar/testcontainers-cloud-setup-action@v1
         with:
           token: ${{ secrets.TC_CLOUD_TOKEN }}
-          
+
       - name: Check Docker Version
         run: docker --version
           
