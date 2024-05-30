@@ -24,10 +24,22 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
+      - name: Print Environment Variables
+        run: printenv | grep DB
+
+      - name: List Configuration Files
+        run: ls -R src/main/resources
+
+      - name: Print Configuration File
+        run: cat src/main/resources/application.yml
+
       - name: Setup Testcontainers Cloud Client
         uses: atomicjar/testcontainers-cloud-setup-action@v1
         with:
           token: ${{ secrets.TC_CLOUD_TOKEN }}
+          
+      - name: Check Docker Version
+        run: docker --version
           
       - name: Build with Gradle
         run: ./gradlew build
