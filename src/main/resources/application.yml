@@ -10,8 +10,8 @@ spring:
       ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/booking
-    username: admin
-    password: admin
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driverClassName: org.postgresql.Driver
   sql:
     init:
