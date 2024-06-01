@@ -14,6 +14,8 @@ jobs:
     env:
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      IMAGE_NAME: my-docker-image
+      DOCKERFILE_PATH: Dockerfile
     steps:
       - uses: actions/checkout@v3
 
@@ -23,6 +25,12 @@ jobs:
           java-version: 21
           distribution: 'temurin'
           cache: 'gradle'
+          
+      - name: Build Docker image
+        run: docker build -t ${{ env.IMAGE_NAME }} -f ${{ env.DOCKERFILE_PATH }} .
+
+      - name: Run Docker container
+        run: docker run --rm --network host -v /var/run/docker.sock:/var/run/docker.sock ${{ env.IMAGE_NAME }}
 
       - name: Print Environment Variables
         run: printenv | grep DB
