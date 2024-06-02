@@ -41,9 +41,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Copy application.yml
-        run: cp src/main/resources/application.yml src/test/resources/application.yml
-
       - name: Run tests
         run: ./gradlew build
 
