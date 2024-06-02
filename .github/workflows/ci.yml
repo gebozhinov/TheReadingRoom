@@ -41,6 +41,24 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: List test resources directory
+        run: ls -R src/test/resources/
+
+      - name: Copy application.yml if exists
+        run: |
+          if [ -f src/main/resources/application.yml ]; then
+            cp src/main/resources/application.yml src/test/resources/application.yml
+          fi
+
+      - name: List test resources directory after copy
+        run: ls -R src/test/resources/
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Run tests
         run: ./gradlew build
 
