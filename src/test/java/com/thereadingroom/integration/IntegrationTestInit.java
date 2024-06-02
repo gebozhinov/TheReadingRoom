@@ -1,11 +1,15 @@
 package com.thereadingroom.integration;
 
+import com.thereadingroom.ThereadingroomApplication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestConstructor;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -17,6 +21,9 @@ import org.testcontainers.utility.DockerImageName;
 import javax.sql.DataSource;
 
 @Testcontainers
+@ActiveProfiles("test")
+@SpringBootTest(properties = {"spring.main.allow-bean-definition-overriding=true"}, classes = ThereadingroomApplication.class)
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public abstract class IntegrationTestInit {
 
     @Autowired

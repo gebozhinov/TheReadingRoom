@@ -62,12 +62,6 @@ jobs:
       - name: Run tests
         run: ./gradlew build
 
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-report
-          path: build/reports/tests/test
-
 
 #      - name: Build Docker image
 #        run: docker build -t ${{ env.IMAGE_NAME }} -f ${{ env.DOCKERFILE_PATH }} .
