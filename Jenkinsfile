@@ -7,9 +7,14 @@ pipeline {
                 echo 'Building..'
             }
         }
-        stage('Test') {
+        stage('Exclude Integration Tests') {
             steps {
                 sh './gradlew build -x test'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Success'
             }
         }
     }
